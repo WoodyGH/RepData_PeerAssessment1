@@ -8,7 +8,7 @@ output:
 ## Set Global Options
 
 ```r
-knitr::opts_chunk$set(echo = TRUE, results = 'asis')
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
@@ -61,14 +61,18 @@ daily_mean <- mean(steps_per_day$steps)
 daily_mean
 ```
 
-[1] 10766.19
+```
+## [1] 10766.19
+```
 
 ```r
 daily_median <-median(steps_per_day$steps)
 daily_median
 ```
 
-[1] 10765
+```
+## [1] 10765
+```
 
 
 ## What is the average daily activity pattern?
@@ -84,7 +88,9 @@ qplot(interval, steps, data=avg_steps_time, geom="line", xlab="Time Interval", y
 avg_steps_time[which.max(avg_steps_time$steps), 1]
 ```
 
-[1] 835
+```
+## [1] 835
+```
 
 
 
@@ -94,7 +100,9 @@ avg_steps_time[which.max(avg_steps_time$steps), 1]
 sum(is.na(raw_data$steps)) #count total number of NAs
 ```
 
-[1] 2304
+```
+## [1] 2304
+```
 
 ```r
 new_raw_data <- raw_data  #make a copy of the raw data
@@ -120,28 +128,36 @@ new_daily_mean <- mean(new_steps_per_day$steps)
 new_daily_mean
 ```
 
-[1] 10766.19
+```
+## [1] 10766.19
+```
 
 ```r
 new_daily_median <- median(new_steps_per_day$steps)
 new_daily_median
 ```
 
-[1] 10766.19
+```
+## [1] 10766.19
+```
 
 ```r
 diff_mean <- new_daily_mean - daily_mean  #cacluate the difference in mean
 diff_mean  
 ```
 
-[1] 0
+```
+## [1] 0
+```
 
 ```r
 diff_median <- new_daily_median - daily_median #cacluate the difference in median
 diff_median
 ```
 
-[1] 1.188679
+```
+## [1] 1.188679
+```
 
 ```r
 #What is the impact of imputing missing data on the estimates of the total daily number of steps?
