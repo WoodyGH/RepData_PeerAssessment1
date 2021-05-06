@@ -39,9 +39,20 @@ avg_steps_time[which.max(avg_steps_time$steps), 1]
 
 ## Imputing missing values
 ```{r}
+sum(is.na(raw_data$steps)) #count total number of NAs
+new_raw_data <- raw_data  #make a copy of the raw data
 
+for (i in 1:nrow(new_raw_data)) {
+      if(is.na(new_raw_data[i,1])) {
+            new_raw_data[i,1] <- avg_steps_time[which(avg_steps_time$interval==new_raw_data[i,3]), 2]
+      }
+}
+#draw a histogram out of the new data
+new_steps_per_day <- aggregate(steps ~ date, new_raw_data, sum)
+qplot(new_steps_per_day$steps, geom = "histogram", xlab="Number of Steps", ylab="Number of days")
+mean(new_steps_per_day$steps)
+median(new_steps_per_day$steps)
 
 ```
-
 
 ## Are there differences in activity patterns between weekdays and weekends?
