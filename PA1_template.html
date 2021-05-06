@@ -363,8 +363,7 @@ raw_data &lt;- read.csv(&quot;activity.csv&quot;)</code></pre>
 </div>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
 <h2>What is mean total number of steps taken per day?</h2>
-<pre class="r"><code>library(tidyr)
-library(dplyr)</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
@@ -373,7 +372,8 @@ library(dplyr)</code></pre>
 <pre><code>## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(ggplot2)
+<pre class="r"><code>library(tidyr)
+library(ggplot2)
 raw_data$date &lt;- as.Date(raw_data$date, &quot;%Y-%m-%d&quot;)
 steps_per_day &lt;- aggregate(steps ~ date, raw_data, sum)
 qplot(steps_per_day$steps, geom = &quot;histogram&quot;, xlab=&quot;Number of Steps&quot;, ylab=&quot;Number of days&quot;)</code></pre>

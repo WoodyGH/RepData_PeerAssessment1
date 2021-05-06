@@ -22,7 +22,6 @@ raw_data <- read.csv("activity.csv")
 ## What is mean total number of steps taken per day?
 
 ```r
-library(tidyr)
 library(dplyr)
 ```
 
@@ -44,6 +43,7 @@ library(dplyr)
 ```
 
 ```r
+library(tidyr)
 library(ggplot2)
 raw_data$date <- as.Date(raw_data$date, "%Y-%m-%d")
 steps_per_day <- aggregate(steps ~ date, raw_data, sum)
