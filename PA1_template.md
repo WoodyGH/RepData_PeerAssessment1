@@ -45,6 +45,8 @@ library(dplyr)
 ```r
 library(tidyr)
 library(ggplot2)
+
+#Histogram of the total number of steps taken each day
 raw_data$date <- as.Date(raw_data$date, "%Y-%m-%d")
 steps_per_day <- aggregate(steps ~ date, raw_data, sum)
 qplot(steps_per_day$steps, geom = "histogram", xlab="Number of Steps", ylab="Number of days")
@@ -57,6 +59,7 @@ qplot(steps_per_day$steps, geom = "histogram", xlab="Number of Steps", ylab="Num
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
+#Mean and median number of steps taken each day
 daily_mean <- mean(steps_per_day$steps)
 daily_mean
 ```
@@ -85,6 +88,7 @@ qplot(interval, steps, data=avg_steps_time, geom="line", xlab="Time Interval", y
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 ```r
+#The 5-minute interval that, on average, contains the maximum number of steps
 avg_steps_time[which.max(avg_steps_time$steps), 1]
 ```
 
@@ -107,12 +111,14 @@ sum(is.na(raw_data$steps)) #count total number of NAs
 ```r
 new_raw_data <- raw_data  #make a copy of the raw data
 
+#cycle through rows, and if steps has 'na', then replace 'na' with the average value.
 for (i in 1:nrow(new_raw_data)) {
       if(is.na(new_raw_data[i,1])) {
             new_raw_data[i,1] <- avg_steps_time[which(avg_steps_time$interval==new_raw_data[i,3]), 2]
       }
 }
-#draw a histogram out of the new data
+
+#draw a histogram of the total number of steps taken each day after missing values are imputed.
 new_steps_per_day <- aggregate(steps ~ date, new_raw_data, sum)
 qplot(new_steps_per_day$steps, geom = "histogram", xlab="Number of Steps", ylab="Number of days")
 ```
@@ -124,6 +130,7 @@ qplot(new_steps_per_day$steps, geom = "histogram", xlab="Number of Steps", ylab=
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 ```r
+#Calculate and report the mean and median total number of steps taken per day.
 new_daily_mean <- mean(new_steps_per_day$steps)
 new_daily_mean
 ```
@@ -142,6 +149,7 @@ new_daily_median
 ```
 
 ```r
+#Do these values differ from the estimates from the first part of the assignment?
 diff_mean <- new_daily_mean - daily_mean  #cacluate the difference in mean
 diff_mean  
 ```
@@ -160,7 +168,7 @@ diff_median
 ```
 
 ```r
-#What is the impact of imputing missing data on the estimates of the total daily number of steps?
+#What is the impact of imputing missing data on the estimates of the total daily number of steps? - See the plot below for the differece between imputted and orginal data by date.
 new_steps_per_day <- aggregate(steps ~ date, new_raw_data, sum)
 diff_steps_per_day <- merge(new_steps_per_day, steps_per_day, by.x="date", by.y="date", all=TRUE)
 diff_steps_per_day[is.na(diff_steps_per_day)] <- 0
